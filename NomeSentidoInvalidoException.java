@@ -1,6 +1,6 @@
-public class NomeSentidoInvalidaException extends Exception {
+public class NomeSentidoInvalidoException extends Exception {
     
-    public NomeSentidoInvalidaException(String mensagem){
+    public NomeSentidoInvalidoException(String mensagem){
         super(mensagem);
     }
     

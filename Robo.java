@@ -29,10 +29,10 @@ public class Robo{
     
     
 //mudar o tipo para int o retorno deve ser a nova coordenada
-    public void mover(String direcao) throws MovimentoInvalidoException,NomeSentidoInvalidaException{
+    public void mover(String direcao) throws MovimentoInvalidoException,NomeSentidoInvalidoException{
         
         if(!(direcao.equals("up") || direcao.equals("down") || (direcao.equals("right")) || direcao.equals("left")))         
-            throw new NomeSentidoInvalidaException("Direção inválida! Use: up, down, right ou left");
+            throw new NomeSentidoInvalidoException("Direção inválida! Use: up, down, right ou left");
         
         if(direcao.equals("up")){
             if(eixoY == 0)
@@ -43,7 +43,7 @@ public class Robo{
         }
 
         if(direcao.equals("down")){
-            if(eixoY == 5)
+            if(eixoY == 3)
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             
             eixoY++;
@@ -52,7 +52,7 @@ public class Robo{
         }
         
         if(direcao.equals("right")){
-            if(eixoX == 5)
+            if(eixoX == 3)
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
             eixoX++;
@@ -86,7 +86,7 @@ public class Robo{
 
         if(sentido == 2){
             //down
-            if(eixoY == 5)
+            if(eixoY == 3)
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             
             eixoY++;
@@ -96,7 +96,7 @@ public class Robo{
         
         if(sentido == 3){
             //rigth
-            if(eixoX == 5)
+            if(eixoX == 3)
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
             eixoX++;

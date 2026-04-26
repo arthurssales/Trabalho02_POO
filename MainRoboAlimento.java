@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class MainRoboAlimento {
@@ -12,10 +13,10 @@ public class MainRoboAlimento {
         String corRobo;        
         int i,j;
               
-        String[][] matriz = new String[6][6];
+        String[][] matriz = new String[4][4];
         
-        for(i=0;i<6;i++){
-            for(j=0;j<6;j++){
+        for(i=0;i<4;i++){
+            for(j=0;j<4;j++){
                 matriz[i][j]= "0";
             }
         }
@@ -35,11 +36,11 @@ public class MainRoboAlimento {
         while(!posicaoValida || (posicaoYAli == 0 && posicaoXAli == 0)){
             System.out.println("Indique a posição do alimento. A posição (0,0) é inválida");
             
-            System.out.println("Coordenada do eixo x (de 0 a 5): "); 
+            System.out.println("Coordenada do eixo x (de 0 a 3): "); 
             posicaoXAli = teclado.nextInt();
             teclado.nextLine();        
             
-            System.out.println("Coordenada do eixo y (de 0 a 5): ");
+            System.out.println("Coordenada do eixo y (de 0 a 3): ");
             posicaoYAli = teclado.nextInt();
             teclado.nextLine();    
             
@@ -52,15 +53,30 @@ public class MainRoboAlimento {
             }                   
         }
          
+        matriz[0][0] = robo.getCor();
+
         System.out.println("1 - Comandos por escrita\n2 - Comandos por números");
         opcao = teclado.nextInt();
         teclado.nextLine();
             
         if (opcao == 1) {
             do{
-                
-                for(i=0;i<6;i++){
-                    for(j=0;j<6;j++){
+                try {
+                    if (System.getProperty("os.name").contains("Windows")) {
+                        // Comando específico para Windows
+                        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    } else {
+                        // Comando para Linux/MacOS (opcional, para tornar o código cross-platform)
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
+                    }
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                //robo sumindo da matriz
+                for(i=0;i<4;i++){
+                    for(j=0;j<4;j++){
                         if(matriz[i][j].equals(robo.getCor()))
                             System.out.print(matriz[i][j] + " ");
                         else
@@ -81,13 +97,15 @@ public class MainRoboAlimento {
                         robo.mover(nomeSentido);                        
                         matriz[robo.getEixoY()][robo.getEixoX()] = robo.getCor();
                     } 
-                    catch (NomeSentidoInvalidaException e) {
+                    catch (NomeSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
+                        teclado.nextLine();
                     }
                     
                 }
                 catch(MovimentoInvalidoException e){
                     System.out.println(e.getMessage());
+                    teclado.nextLine();
                 }
                 //quando trata uma excessao, o robo some da matriz
             }while(!robo.alimentoEncontrado(posicaoYAli,posicaoXAli)); 
@@ -95,9 +113,22 @@ public class MainRoboAlimento {
                  
         if (opcao == 2) {
             do{
+                try {
+                    if (System.getProperty("os.name").contains("Windows")) {
+                        // Comando específico para Windows
+                        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+                    } else {
+                        // Comando para Linux/MacOS (opcional, para tornar o código cross-platform)
+                        System.out.print("\033[H\033[2J");
+                        System.out.flush();
+                    }
+                } catch (IOException | InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
                 
-                for(i=0;i<6;i++){
-                    for(j=0;j<6;j++){
+                //robo sumnido da matriz
+                for(i=0;i<4;i++){
+                    for(j=0;j<4;j++){
                         if(matriz[i][j].equals(robo.getCor()))
                             System.out.print(matriz[i][j] + " ");
                         else
@@ -121,11 +152,13 @@ public class MainRoboAlimento {
                     } 
                     catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
+                        teclado.nextLine();
                     }
                     
                 }
                 catch(MovimentoInvalidoException e){
                     System.out.println(e.getMessage());
+                    teclado.nextLine();
                     
                 }
                 //quando trata uma excessão, o robo some da matriz
@@ -134,8 +167,8 @@ public class MainRoboAlimento {
                 
         }
 
-        for(i=0;i<6;i++){
-            for(j=0;j<6;j++){
+        for(i=0;i<4;i++){
+            for(j=0;j<4;j++){
                 if(matriz[i][j].equals(robo.getCor()))
                     System.out.print(matriz[i][j] + " ");
                 else
@@ -143,7 +176,7 @@ public class MainRoboAlimento {
             }
             System.out.println();
         }
-        
-        System.out.println("O robô encontrou o alimento!");
+
+        System.out.println("GAME OVER!!\nAlimento encontrado!");
    }
 }
