@@ -1,48 +1,54 @@
 public class Robo{
-    protected int cor;
+    protected String cor;
     protected int eixoX = 0;
     protected int eixoY = 0;
     protected boolean encontrouAlimento;  
 
-
-    public Robo(int cor){
-        this.cor = cor;
+    
+    public Robo(String cor)throws CorInvalidaException{
+        if(!(cor.equals("azul") || cor.equals("vermelho") || cor.equals("preto") || cor.equals("branco")))
+            throw new CorInvalidaException("Cor inválida!");
+        
         this.eixoX = 0;
         this.eixoY = 0;
+
+        if(cor.equals("azul"))
+            this.cor = "A";
+        
+        if(cor.equals ("vermelho"))
+            this.cor = "V";
+
+        if(cor.equals ("preto"))
+            this.cor = "P";
+
+        if(cor.equals("branco"))
+            this.cor = "B";
+        
     }   
-
-    Plano tabuleiro = new Plano();
     
-
+    
+    
+//mudar o tipo para int o retorno deve ser a nova coordenada
     public void mover(String direcao) throws MovimentoInvalidoException,NomeSentidoInvalidaException{
         
         if(!(direcao.equals("up") || direcao.equals("down") || (direcao.equals("right")) || direcao.equals("left")))         
             throw new NomeSentidoInvalidaException("Direção inválida! Use: up, down, right ou left");
-        
-        if(direcao.equals("down")){
-            if(eixoY == 5)
-                throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
-            
-            eixoY++;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
-    
-        }
-        
         
         if(direcao.equals("up")){
             if(eixoY == 0)
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             
             eixoY--;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
             
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
+        }
+
+        if(direcao.equals("down")){
+            if(eixoY == 5)
+                throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
+            
+            eixoY++;
+            
+           
         }
         
         if(direcao.equals("right")){
@@ -50,10 +56,6 @@ public class Robo{
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
             eixoX++;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
             
         }
         
@@ -63,11 +65,7 @@ public class Robo{
             
             eixoX--;
             
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
-            
+           
         }
         
     }
@@ -82,10 +80,8 @@ public class Robo{
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             
             eixoY--;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
+            
+
         }
 
         if(sentido == 2){
@@ -94,10 +90,8 @@ public class Robo{
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             
             eixoY++;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
+            
+
         }
         
         if(sentido == 3){
@@ -106,10 +100,8 @@ public class Robo{
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
             eixoX++;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY,eixoX);
-            tabuleiro.ImprimirTabuleiro();
+            
+
         }
         
         if(sentido == 4){
@@ -118,28 +110,23 @@ public class Robo{
                 throw new MovimentoInvalidoException("Erro! Limite esquerdo atingido!");
             
             eixoX--;
-            Plano posicaoRobo = new Plano();
-            posicaoRobo.posicionarRobo(eixoY, eixoX);
-            tabuleiro.construirTabuleiro(eixoY, eixoX);
-            tabuleiro.ImprimirTabuleiro();
-
+            
 
         }
     }
 
-    public void alimentoEncontrado(int eixoY,int eixoX){
-        //devo acessar o tabuleiro e informar se o valor da coordenada é "^";" 
-        int i,j;
-        for (i = 0; i < 6; i++) {
-            for (j = 0 ; j < 6 ; j++){
-                if(tabuleiro.retornaElemento(i,j).equals("^"));
-                    encontrouAlimento = true;
-            }   
-        }
-    }
-
-    public int getCor() {
+    public boolean alimentoEncontrado(int eixoY,int eixoX){
+         return (eixoY == this.eixoY && eixoX == this.eixoX);
+    }   
+    
+    
+  
+    public String getCor() {
         return cor;
+    }
+   
+    public void setCor(String cor) {
+        this.cor = cor;
     }
 
    
@@ -163,13 +150,4 @@ public class Robo{
         return encontrouAlimento;
     }
 
-    public Plano getTabuleiro() {
-        return tabuleiro;
-    }
-
-    public void setTabuleiro(Plano tabuleiro) {
-        this.tabuleiro = tabuleiro;
-    }
-
-    
 }

@@ -1,26 +1,30 @@
-public class Plano {
+public class Matriz {
     private String[][] tabuleiro = new String[6][6];
-    private int coodx, coody;
+    private int eixoX, eixoY;
     private int i, j;
     
-    /*public Plano(int coodx, int coody){        
-        this.coodx = coodx;
-        this.coody = coody;
-    }*/
     
+    public Matriz(int eixoYAli,int eixoXAli){
+        for(i = 0; i < 6; i++){
+            for(j = 0; j < 6; j++){
+                    tabuleiro[i][j] = "0";
+            }
+        }
+        tabuleiro[eixoYAli][eixoXAli] = "^";
+    }   
+
    public void trocarPosicoes(int eixoX,int eixoY){
 
    }
 
 
-   public void construirTabuleiro(int eixoY,int eixoX){
+   /*public void construirTabuleiro(){
         for(i = 0; i < 6; i++){
             for(j = 0; j < 6; j++){
                 tabuleiro[i][j] = "0";
             }
         }
-        tabuleiro[eixoY][eixoX] = "A";
-    }
+    }*/
     
     public void ImprimirTabuleiro(){
         //criei outro metodo para a construção do tabuleiro
@@ -29,7 +33,7 @@ public class Plano {
                 tabuleiro[i][j] = "0";
                 }
                 }
-                tabuleiro[coodx][coody] = "1";
+                tabuleiro[eixoX][eixoY] = "1";
                 */
         
                //mostrar apenas o robo
@@ -46,7 +50,7 @@ public class Plano {
     }
 
     public void posicionarRobo(int eixoY,int eixoX){
-        tabuleiro[eixoY][eixoX] = "1";
+        tabuleiro[eixoY][eixoX] = "C";
     }
     
     public void posicionarAlimento(int eixoY, int eixoX){
@@ -63,19 +67,19 @@ public class Plano {
     }
 
     public int getCoodx() {
-        return coodx;
+        return eixoX;
     }
 
-    public void setCoodx(int coodx) {
-        this.coodx = coodx;
+    public void setCoodx(int eixoX) {
+        this.eixoX = eixoX;
     }
 
     public int getCoody() {
-        return coody;
+        return eixoY;
     }
 
-    public void setCoody(int coody) {
-        this.coody = coody;
+    public void setCoody(int eixoY) {
+        this.eixoY = eixoY;
     }
 }
 
