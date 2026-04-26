@@ -11,12 +11,19 @@ public class MainRoboAlimento {
         boolean posicaoValida = false;
         //colocar cor no robo
         
-        
-        System.out.println("Escolha uma cor pro robo: ");
-        System.out.println("1 - Azul\n2 - Vermelho\n3 - Preto\n4 - Branco: ");
-        corRobo = teclado.nextInt();
-        Robo robo = new Robo(corRobo);
-    
+ 
+       while(true){
+        System.out.println("Azul\nVermelho\nPreto\nBranco: ");
+       try{
+            
+System.out.println("Escolha uma cor pro robo: ");
+           corRobo = teclado.nextLine();       
+           Robo robo = new Robo(corRobo);   
+           break;
+       }catch(CoordenadaInvalidaException  e){ 
+   System.out.println(e.getMessage()
+}
+   }   
 
         while(!posicaoValida){
            
