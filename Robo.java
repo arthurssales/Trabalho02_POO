@@ -5,10 +5,16 @@ public class Robo{
     protected boolean encontrouAlimento;  
 
 
-    public Robo(int cor){
+    public Robo(int cor)throws CoordenadaInvalidaException{ /*mudar exception*/
+    if( !(cor.equals("Azul") || cor.equals("Vermelho") || cor.equals("Preto") || cor.equals("Branco")) )
+throw new CoordenadaInvalidaException("Cor indisponível");
+
         this.cor = cor;
         this.eixoX = 0;
         this.eixoY = 0;
+
+        
+
     }   
 
     Plano tabuleiro = new Plano();
@@ -137,6 +143,8 @@ public class Robo{
             }   
         }
     }
+
+
 
     public int getCor() {
         return cor;
