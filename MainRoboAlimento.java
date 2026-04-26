@@ -13,10 +13,17 @@ public class MainRoboAlimento {
         
         
         System.out.println("Escolha uma cor pro robo: ");
+opcao = teclado.nextInt();
+teclado.nextLine();
+
+       while(true){
         System.out.println("1 - Azul\n2 - Vermelho\n3 - Preto\n4 - Branco: ");
         corRobo = teclado.nextInt();
-        Robo robo = new Robo(corRobo);
+        
+
+      Robo robo = new Robo(corRobo);
     
+      }
 
         while(!posicaoValida){
            
