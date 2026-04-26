@@ -6,13 +6,22 @@ public class Robo{
 
 
     public Robo(int cor)throws CoordenadaInvalidaException{ /*mudar exception*/
-    if( !(cor.equals("Azul") || cor.equals("Vermelho") || cor.equals("Preto") || cor.equals("Branco")) )
+    if( !(cor.equals("azul") || cor.equals("vermelho") || cor.equals("preto") || cor.equals("branco")) )
 throw new CoordenadaInvalidaException("Cor indisponível");
 
-        this.cor = cor;
         this.eixoX = 0;
         this.eixoY = 0;
 
+if(cor.equals("azul"))
+this.cor = "A";
+if(cor.equals ("vermelho"))
+this.cor = "V";
+
+if(cor.equals ("preto"))
+this.cor = "P";
+
+if(cor.equals("branco"))
+this.cor = "B"
         
 
     }   
