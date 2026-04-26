@@ -11,8 +11,7 @@ public class MainRoboAlimento {
         int posicaoXAli = 0, posicaoYAli = 0;
         String corRobo;        
         int i,j;
-        
-        
+              
         String[][] matriz = new String[6][6];
         
         for(i=0;i<6;i++){
@@ -22,25 +21,20 @@ public class MainRoboAlimento {
         }
         Robo robo = null;
         
-        
-
-
         while(robo == null){
-            System.out.println("Escolha uma cor pro robo: "); System.out.println("azul - vermelho - preto - branco");
+            System.out.println("Escolha uma cor pro robo"); 
+            System.out.println("azul - vermelho - preto - branco");
             corRobo = teclado.nextLine();      
             try{     
                 robo = new Robo(corRobo);   
-                break;
             }catch(CorInvalidaException e){ 
                 System.out.println(e.getMessage());
             }
         }
 
-        while(!posicaoValida){
+        while(!posicaoValida || (posicaoYAli == 0 && posicaoXAli == 0)){
+            System.out.println("Indique a posição do alimento. A posição (0,0) é inválida");
             
-            System.out.println("Indique a posição do alimento");
-            //não permitir que a coordenada selecionada seja (0,0)
-
             System.out.println("Coordenada do eixo x (de 0 a 5): "); 
             posicaoXAli = teclado.nextInt();
             teclado.nextLine();        
@@ -49,31 +43,41 @@ public class MainRoboAlimento {
             posicaoYAli = teclado.nextInt();
             teclado.nextLine();    
             
-            
             try{    
                 matriz [posicaoYAli][posicaoXAli] = "^";
                 posicaoValida = true;    
             }
             catch(Exception e){
                 System.out.println("Coordenada inválida!");
-            }               
+            }                   
         }
-        
-        
-        System.out.println("1 - Mover por escrita\n2 - Mover por números");
+         
+        System.out.println("1 - Comandos por escrita\n2 - Comandos por números");
         opcao = teclado.nextInt();
         teclado.nextLine();
             
         if (opcao == 1) {
             do{
+                
+                for(i=0;i<6;i++){
+                    for(j=0;j<6;j++){
+                        if(matriz[i][j].equals(robo.getCor()))
+                            System.out.print(matriz[i][j] + " ");
+                        else
+                            System.out.print("?" + " ");
+                    }
+                    System.out.println();
+                }
+
                 System.out.println("Indique o sentido do robô: ");
-                //retirar a opcao de sair
-                System.out.println("up\ndown\nright\nleft\nsair");
+                
+                System.out.println("up\ndown\nright\nleft");
                 nomeSentido = teclado.nextLine();
                 
                 try{                 
                 
                     try {
+                        matriz[robo.getEixoY()][robo.getEixoX()] = "0";
                         robo.mover(nomeSentido);                        
                         matriz[robo.getEixoY()][robo.getEixoX()] = robo.getCor();
                     } 
@@ -85,30 +89,35 @@ public class MainRoboAlimento {
                 catch(MovimentoInvalidoException e){
                     System.out.println(e.getMessage());
                 }
-            
-                for(i=0;i<6;i++){
-                    for(j=0;j<6;j++){
-                        System.out.print(matriz[i][j] + " ");
-                
-                    }
-                    System.out.println();
-                }
-                
-            }while(!robo.alimentoEncontrado(posicaoYAli,posicaoXAli)); //!condicaoDeVitoria;
+                //quando trata uma excessao, o robo some da matriz
+            }while(!robo.alimentoEncontrado(posicaoYAli,posicaoXAli)); 
         }
                  
         if (opcao == 2) {
             do{
+                
+                for(i=0;i<6;i++){
+                    for(j=0;j<6;j++){
+                        if(matriz[i][j].equals(robo.getCor()))
+                            System.out.print(matriz[i][j] + " ");
+                        else
+                            System.out.print("?" + " ");
+                    }
+                    System.out.println();
+                }
+                
                 System.out.println("Indique o sentido do robô: ");
-                //retirar a opcao de sair
-                System.out.println("1 - up\n2 - down\n3 - right\n4 - left\n5 - sair ");
+                
+                System.out.println("1 - up\n2 - down\n3 - right\n4 - left");
                 numeroSentido = teclado.nextInt();
                 teclado.nextLine();
                 
                 try{
                         
                     try {
+                        matriz[robo.getEixoY()][robo.getEixoX()] = "0";
                         robo.mover(numeroSentido);
+                        matriz[robo.getEixoY()][robo.getEixoX()] = robo.getCor();
                     } 
                     catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
@@ -119,18 +128,22 @@ public class MainRoboAlimento {
                     System.out.println(e.getMessage());
                     
                 }
-                               
-            }while(robo.alimentoEncontrado(posicaoYAli, posicaoXAli)); //!condicaoDeVitoria;
-            
-            for(i=0;i<6;i++){
-                for(j=0;j<6;j++){
-                    System.out.print(matriz[i][j] + " ");
-            
-                }
-                System.out.println();
-            }
+                //quando trata uma excessão, o robo some da matriz
+                    
+            }while(!robo.alimentoEncontrado(posicaoYAli, posicaoXAli)); 
+                
         }
 
-        System.out.println("Robo encontrou o alimento!");
+        for(i=0;i<6;i++){
+            for(j=0;j<6;j++){
+                if(matriz[i][j].equals(robo.getCor()))
+                    System.out.print(matriz[i][j] + " ");
+                else
+                    System.out.print("?" + " ");
+            }
+            System.out.println();
+        }
+        
+        System.out.println("O robô encontrou o alimento!");
    }
 }

@@ -116,7 +116,7 @@ public class Robo{
     }
 
     public boolean alimentoEncontrado(int eixoY,int eixoX){
-         return (eixoY == this.eixoY && eixoX == this.eixoX);
+        return (eixoY == this.eixoY && eixoX == this.eixoX);
     }   
     
     
