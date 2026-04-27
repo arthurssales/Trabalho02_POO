@@ -89,22 +89,27 @@ public class MainRoboAlimento {
                 
                 System.out.println("up\ndown\nright\nleft");
                 nomeSentido = teclado.nextLine();
+
+                int coodX = robo.getCoodX();
+                int coodY = robo.getCoodY();
                 
                 try{                 
                 
                     try {
-                        matriz[robo.getEixoY()][robo.getEixoX()] = "0";
+                        matriz[robo.getCoodY()][robo.getCoodX()] = "0";
                         robo.mover(nomeSentido);                        
-                        matriz[robo.getEixoY()][robo.getEixoX()] = robo.getCor();
+                        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                     } 
                     catch (NomeSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
+                        matriz[coodY][coodX] = robo.getCor();
                         teclado.nextLine();
                     }
                     
                 }
                 catch(MovimentoInvalidoException e){
                     System.out.println(e.getMessage());
+                    matriz[coodY][coodX] = robo.getCor();
                     teclado.nextLine();
                 }
                 //quando trata uma excessao, o robo some da matriz
@@ -142,22 +147,27 @@ public class MainRoboAlimento {
                 System.out.println("1 - up\n2 - down\n3 - right\n4 - left");
                 numeroSentido = teclado.nextInt();
                 teclado.nextLine();
+
+                int coodX = robo.getCoodX();
+                int coodY = robo.getCoodY();
                 
                 try{
                         
                     try {
-                        matriz[robo.getEixoY()][robo.getEixoX()] = "0";
+                        matriz[robo.getCoodY()][robo.getCoodX()] = "0";
                         robo.mover(numeroSentido);
-                        matriz[robo.getEixoY()][robo.getEixoX()] = robo.getCor();
+                        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                     } 
                     catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
+                        matriz[coodY][coodX] = robo.getCor();
                         teclado.nextLine();
                     }
                     
                 }
                 catch(MovimentoInvalidoException e){
                     System.out.println(e.getMessage());
+                    matriz[coodY][coodX] = robo.getCor();
                     teclado.nextLine();
                     
                 }

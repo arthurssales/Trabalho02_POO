@@ -1,16 +1,14 @@
 public class Robo{
     protected String cor;
-    protected int eixoX = 0;
-    protected int eixoY = 0;
-    protected boolean encontrouAlimento;  
-
+    protected int coodX = 0;
+    protected int coodY = 0;
     
     public Robo(String cor)throws CorInvalidaException{
         if(!(cor.equals("azul") || cor.equals("vermelho") || cor.equals("preto") || cor.equals("branco")))
             throw new CorInvalidaException("Cor inválida!");
         
-        this.eixoX = 0;
-        this.eixoY = 0;
+        this.coodX = 0;
+        this.coodY = 0;
 
         if(cor.equals("azul"))
             this.cor = "A";
@@ -35,35 +33,35 @@ public class Robo{
             throw new NomeSentidoInvalidoException("Direção inválida! Use: up, down, right ou left");
         
         if(direcao.equals("up")){
-            if(eixoY == 0)
+            if(coodY == 0)
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             
-            eixoY--;
+            coodY--;
             
         }
 
         if(direcao.equals("down")){
-            if(eixoY == 3)
+            if(coodY == 3)
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             
-            eixoY++;
+            coodY++;
             
            
         }
         
         if(direcao.equals("right")){
-            if(eixoX == 3)
+            if(coodX == 3)
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
-            eixoX++;
+            coodX++;
             
         }
         
         if(direcao.equals("left")){
-            if(eixoX == 0)
+            if(coodX == 0)
                 throw new MovimentoInvalidoException("Erro! Limite esquerdo atingido!");
             
-            eixoX--;
+            coodX--;
             
            
         }
@@ -76,47 +74,47 @@ public class Robo{
         
         if(sentido == 1){
             //up
-            if(eixoY == 0)
+            if(coodY == 0)
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             
-            eixoY--;
+            coodY--;
             
 
         }
 
         if(sentido == 2){
             //down
-            if(eixoY == 3)
+            if(coodY == 3)
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             
-            eixoY++;
+            coodY++;
             
 
         }
         
         if(sentido == 3){
             //rigth
-            if(eixoX == 3)
+            if(coodX == 3)
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
             
-            eixoX++;
+            coodX++;
             
 
         }
         
         if(sentido == 4){
             //left
-            if(eixoX == 0)
+            if(coodX == 0)
                 throw new MovimentoInvalidoException("Erro! Limite esquerdo atingido!");
             
-            eixoX--;
+            coodX--;
             
 
         }
     }
 
     public boolean alimentoEncontrado(int eixoY,int eixoX){
-        return (eixoY == this.eixoY && eixoX == this.eixoX);
+        return (eixoY == this.coodY && eixoX == this.coodX);
     }   
     
     
@@ -130,24 +128,28 @@ public class Robo{
     }
 
    
-    public int getEixoX() {
-        return eixoX;
+    public int getCoodX() {
+        return coodX;
     }
 
-    public void setEixoX(int eixoX) {
-        this.eixoX = eixoX;
+    public void setCoodX(int coodX)throws CoordenadaInvalidaException {
+        if(coodX < 0 || coodX > 3)
+            throw new CoordenadaInvalidaException("Coordenada inválida!");
+    
+        this.coodX = coodX;
     }
 
-    public int getEixoY() {
-        return eixoY;
+    public int getCoodY(){
+        return coodY;
     }
 
-    public void setEixoY(int eixoY) {
-        this.eixoY = eixoY;
+    public void setCoodY(int eixoY)throws CoordenadaInvalidaException{
+        if(coodY < 0 || coodY > 3)
+            throw new CoordenadaInvalidaException("Coordenada inválida!");
+        
+        this.coodY = eixoY;
     }
 
-    public boolean isEncontrouAlimento() {
-        return encontrouAlimento;
-    }
+   
 
 }
