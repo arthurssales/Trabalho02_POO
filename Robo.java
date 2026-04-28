@@ -113,7 +113,7 @@ public class Robo{
         return (eixoY == this.coodY && eixoX == this.coodX);
     }   
     
-    public String retornarNome(String cor){
+    public String retornarCor(String cor){
         if(cor.equals("A"))
             return "azul"; 
         

@@ -2,26 +2,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Main1 {
-    
-    public static void limparTela(){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {    
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
+     
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         int opcao;
         boolean posicaoValida = false;
         
-
         int numeroSentido;
         String nomeSentido;
         int posicaoXAli = 0, posicaoYAli = 0;
@@ -174,5 +160,18 @@ public class Main1 {
         }
 
         System.out.println("\nAlimento encontrado!");
-   }
+    }
+    
+    public static void limparTela(){
+        try {
+            if (System.getProperty("os.name").contains("Windows")) {    
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } else {
+                System.out.print("\033[H\033[2J");
+                System.out.flush();
+            }
+        } catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

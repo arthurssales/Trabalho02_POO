@@ -2,7 +2,6 @@ import java.util.Random;
 
 public class RoboInteligente extends Robo {
     Random random = new Random();
-    private int movimentos;
     public RoboInteligente(String cor)throws CorInvalidaException{
         super(cor);
     }
@@ -18,7 +17,7 @@ public class RoboInteligente extends Robo {
                 this.mover(sentido);
                 return;
             }
-            movimentos++;
+            movimentoValido++;
             coodY--;
         }
         
@@ -29,7 +28,7 @@ public class RoboInteligente extends Robo {
                 this.mover(sentido);
                 return;            
             } 
-            movimentos++;
+            movimentoValido++;
             coodY++;
         }
         
@@ -40,7 +39,7 @@ public class RoboInteligente extends Robo {
                 this.mover(sentido);
                 return;
             }
-            movimentos++;
+            movimentoValido++;
             coodX++;
         }
         
@@ -51,18 +50,12 @@ public class RoboInteligente extends Robo {
                 this.mover(sentido);
                 return;         
             }
-            movimentos++;
+            movimentoValido++;
             coodX--;   
         }
     }
     
-    public int getMovimentos() {
-        return movimentos;
-    }
-
-    public void setMovimentos(int movimentos) {
-        this.movimentos = movimentos;
-    }
+    
 }
 
 

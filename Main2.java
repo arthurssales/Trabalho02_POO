@@ -118,7 +118,7 @@ public class Main2 {
         
         do{
             for(Robo robo : robos){
-                System.out.printf("robô %s\n",robo.retornarNome(robo.getCor()));
+                System.out.printf("robô %s\n",robo.retornarCor(robo.getCor()));
 
                 matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                 
@@ -166,15 +166,15 @@ public class Main2 {
 
         System.out.println("ESTATÍSTICAS DA PARTIDA");
 
-        System.out.printf("Robô %s",robo1.retornarNome(robo1.getCor()));
+        System.out.printf("Robô %s",robo1.retornarCor(robo1.getCor()));
         System.out.print(" - Movimentos inválidos: " + robo1.getMovimentoInvalido());
         System.out.println(" - Movimentos válidos: " + robo1.getMovimentoValido());
         
-        System.out.printf("Robô %s",robo2.retornarNome(robo2.getCor()));
+        System.out.printf("Robô %s",robo2.retornarCor(robo2.getCor()));
         System.out.print(" - Movimentos inválidos: " + robo2.getMovimentoInvalido());
         System.out.println(" - Movimentos válidos: " + robo2.getMovimentoValido());
                
-        System.out.println("Robô vencedor: " + roboVencedor.retornarNome(roboVencedor.getCor()));
+        System.out.println("Robô vencedor: " + roboVencedor.retornarCor(roboVencedor.getCor()));
 
     }    
 }

@@ -147,13 +147,13 @@ public class Main3 {
         }while (roboVencedor == null);
     
         System.out.println("\nESTATISTICAS");
-        System.out.printf("Robô vencedor: %s",roboVencedor.retornarNome(roboVencedor.getCor()));
+        System.out.printf("Robô vencedor: %s",roboVencedor.retornarCor(roboVencedor.getCor()));
 
-        System.out.printf("\nRobô normal (%s) - Movimentos totais: %d",roboNormal.retornarNome(roboNormal.getCor()),
+        System.out.printf("\nRobô normal (%s) - Movimentos totais: %d",roboNormal.retornarCor(roboNormal.getCor()),
         (roboNormal.getMovimentoInvalido() + roboNormal.getMovimentoValido()));
 
-        System.out.printf("\nRobô inteligente (%s) - Movimentos totais: %d",roboInteligente.retornarNome(roboInteligente.getCor()),
-        roboInteligente.getMovimentos());
+        System.out.printf("\nRobô inteligente (%s) - Movimentos totais: %d",roboInteligente.retornarCor(roboInteligente.getCor()),
+        roboInteligente.getMovimentoValido());
     }
 
 
