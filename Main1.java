@@ -1,154 +1,111 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main1 {
      
     public static void main(String[] args) {
+        //1. adicionar sleeper
         Scanner teclado = new Scanner(System.in);
-        int opcao;
         boolean posicaoValida = false;
         
-        int numeroSentido;
-        String nomeSentido;
-        int posicaoXAli = 0, posicaoYAli = 0;
+        int posXAli = 0, posYAli = 0;
         String corRobo;        
         int i,j;
-              
+        
+        ArrayList<String> coresDisponiveis = new ArrayList<>();
+        coresDisponiveis.add("azul");
+        coresDisponiveis.add("vermelho");
+        coresDisponiveis.add("preto");
+        coresDisponiveis.add("branco");
+
         String[][] matriz = new String[4][4];
+        Robo robo = null;
         
         for(i=0;i<4;i++){
             for(j=0;j<4;j++){
-                matriz[i][j]= "-";
+                matriz[i][j]= ".";
             }
         }
         
-        Robo robo = null;
-        
+        //ignorar case sensitive
         while(robo == null){
             System.out.println("Escolha uma cor pro robo"); 
             System.out.println("azul - vermelho - preto - branco");
-            corRobo = teclado.nextLine();      
-            try{     
+            corRobo = teclado.nextLine();
+            
+            if(coresDisponiveis.contains(corRobo))      
                 robo = new Robo(corRobo);   
-            }catch(CorInvalidaException e){ 
-                System.out.println(e.getMessage());
-            }
+
+            else
+                System.out.println("Cor inválida!");       
         }
 
-        while(!posicaoValida || (posicaoYAli == 0 && posicaoXAli == 0)){
+        while(!posicaoValida){
             System.out.println("Indique a posição do alimento. A posição (0,0) é inválida");
             
             System.out.println("Coordenada do eixo y (de 0 a 3): "); 
-            posicaoYAli = teclado.nextInt();
+            posYAli = teclado.nextInt();
             teclado.nextLine();        
             
             System.out.println("Coordenada do eixo x (de 0 a 3): ");
-            posicaoXAli = teclado.nextInt();
+            posXAli = teclado.nextInt();
             teclado.nextLine();    
             
-            try{    
-                matriz [posicaoYAli][posicaoXAli] = "^";
-                posicaoValida = true;    
-            }
-            catch(Exception e){
+            if(posYAli == 0 && posXAli == 0)
                 System.out.println("Coordenada inválida!");
-            }                   
+            
+            else{
+                try{    
+                    matriz [posYAli][posXAli] = "^";
+                    posicaoValida = true;    
+                }
+                catch(Exception e){
+                    System.out.println("Coordenada inválida!");
+                }                   
+            }
         }
          
-        matriz[0][0] = robo.getCor();
-
-        System.out.println("1 - Comandos por escrita\n2 - Comandos por números");
-        opcao = teclado.nextInt();
-        teclado.nextLine();
-            
-        if (opcao == 1) {
+        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
+        limparTela();       
             do{
-               limparTela();
-
+                System.out.println("------------------------------------");
+                
                 for(i=0;i<4;i++){
                     for(j=0;j<4;j++){    
                           System.out.print(matriz[i][j] + " ");
                     }
                     System.out.println();
                 }
-                
-                System.out.println("Indique o sentido do robô: ");
-                
-                System.out.println("up\ndown\nright\nleft");
-                nomeSentido = teclado.nextLine();
-
-                int coodX = robo.getCoodX();
-                int coodY = robo.getCoodY();
-                
-                try{                 
-                
-                    try {
-                        matriz[robo.getCoodY()][robo.getCoodX()] = "-";
-                        robo.mover(nomeSentido);                        
-                        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-                    } 
-                    catch (NomeSentidoInvalidoException e) {
-                        System.out.println(e.getMessage());
-                        matriz[coodY][coodX] = robo.getCor();
-                        teclado.nextLine();
-                    }
-                    
-                }
-                catch(MovimentoInvalidoException e){
-                    System.out.println(e.getMessage());
-                    matriz[coodY][coodX] = robo.getCor();
-                    teclado.nextLine();
-                }
-            
-            }while(!robo.alimentoEncontrado(posicaoYAli,posicaoXAli)); 
-        }
-                 
-        if (opcao == 2) {
-            do{
-                limparTela();
-                
-                for(i=0;i<4;i++){
-                    for(j=0;j<4;j++){
-                            System.out.print(matriz[i][j] + " ");
-                
-                    }
-                    System.out.println();
-                }
-                
-                System.out.println("Indique o sentido do robô: ");
-                
+                                    
+                System.out.println("Indique o sentido do robô:");
                 System.out.println("1 - up\n2 - down\n3 - right\n4 - left");
-                numeroSentido = teclado.nextInt();
-                teclado.nextLine();
-                
+                String entrada = teclado.nextLine();
+
                 int coodX = robo.getCoodX();
                 int coodY = robo.getCoodY();
-                
-                try{
-                    
+
+                try {
+                    matriz[robo.getCoodY()][robo.getCoodX()] = ".";
+
                     try {
-                        matriz[robo.getCoodY()][robo.getCoodX()] = "-";
-                        robo.mover(numeroSentido);
-                        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-                    } 
-                    catch (NumeroSentidoInvalidoException e) {
+                        int direcao = Integer.parseInt(entrada);
+                        robo.mover(direcao); 
+                    } catch (NumberFormatException e) {
+                        robo.mover(entrada);
+                    } catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
-                        matriz[coodY][coodX] = robo.getCor();
-                        teclado.nextLine();
                     }
-                    
-                }
-                catch(MovimentoInvalidoException e){
+
+                    matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
+
+                } catch (NomeSentidoInvalidoException | MovimentoInvalidoException e) {
                     System.out.println(e.getMessage());
                     matriz[coodY][coodX] = robo.getCor();
                     teclado.nextLine();
-                    
-                }               
-                    
-            }while(!robo.alimentoEncontrado(posicaoYAli, posicaoXAli)); 
-                
-        }
-
+                }    
+            }while(!robo.alimentoEncontrado(posYAli,posXAli)); 
+                 
         System.out.println();
 
         for(i=0;i<4;i++){
@@ -160,9 +117,13 @@ public class Main1 {
         }
 
         System.out.println("\nAlimento encontrado!");
+       
+        System.out.println("------------------------------------");
+        System.out.println("ESTATISTICAS");
+        System.out.printf("Movimentos válidos: %d - Movimentos inválidos: %d",robo.getMovimentoValido(),robo.getMovimentoInvalido());
     }
     
-    public static void limparTela(){
+    private static void limparTela(){
         try {
             if (System.getProperty("os.name").contains("Windows")) {    
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

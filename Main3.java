@@ -3,36 +3,37 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Main3 {
-    
+public class Main3 {    
     public static void main(String[] args) {
-        
         Scanner teclado = new Scanner(System.in);
         Random random = new Random();
-        
+          
         String corRobo;
-        
         ArrayList<String> coresDisponiveis = new ArrayList<>();
         coresDisponiveis.add("azul");
         coresDisponiveis.add("vermelho");
         coresDisponiveis.add("preto");
         coresDisponiveis.add("branco");
 
+        String tipo = null;
         int posicaoYAli = 0;
         int posicaoXAli = 0;
-        boolean posicaoValida = false;
-        String[][] matriz = new String[4][4];
         int coodX, coodY;
-
+        
+        String[][] matriz = new String[4][4];
+        
+        boolean posicaoValida = false;
+        
         Robo roboNormal = null;
         RoboInteligente roboInteligente = null;
         Robo roboVencedor = null;
         ArrayList<Robo> robos = new ArrayList<>();
+        
         int i,j;
 
         for(i=0;i<4;i++){
             for(j=0;j<4;j++){
-                matriz[i][j] = "-";
+                matriz[i][j] = ".";
             }
         }
 
@@ -44,12 +45,9 @@ public class Main3 {
                 }    
                 corRobo = teclado.nextLine();    
                 
-                try{     
+                if(coresDisponiveis.contains(corRobo)){
                     roboNormal = new Robo(corRobo);
                     coresDisponiveis.remove(corRobo);
-                    
-                }catch(CorInvalidaException e){ 
-                    System.out.println(e.getMessage());
                 }    
             }
                 
@@ -60,19 +58,17 @@ public class Main3 {
                 }    
                 corRobo = teclado.nextLine();    
                 
-                try{     
+                if(coresDisponiveis.contains(corRobo)){
                     roboInteligente = new RoboInteligente(corRobo);
                     coresDisponiveis.remove(corRobo);
-                    
-                }catch(CorInvalidaException e){ 
-                    System.out.println(e.getMessage());
-                }    
+                }
             }
-
+            
         }while(roboNormal == null || roboInteligente == null);
         
         robos.add(roboNormal);
         robos.add(roboInteligente);
+
 
         while(!posicaoValida || (posicaoYAli == 0 && posicaoXAli == 0)){
             System.out.println("Indique a posição do alimento. A posição (0,0) é invalida");
@@ -95,12 +91,28 @@ public class Main3 {
         }
         
         limparTela();
+        System.out.println("COMEÇANDO ROBÔ NORMAL x ROBÔ INTELIGENTE");
+    
         do{
             for(Robo robo : robos){
-                System.out.printf("Robô %s\n",robo.getCor());
+                
+                if(robo instanceof RoboInteligente)
+                    tipo = "inteligente";
+                else
+                    tipo = "inteligente";
+
+                try {
+                    Thread.sleep(2000); 
+                } 
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
+
+                System.out.printf("Turno do robô %s\n", tipo);
                 
                 matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-
+                
                 for(i=0;i<4;i++){
                     for(j=0;j<4;j++){
                         System.out.print(matriz[i][j] + " ");       
@@ -112,22 +124,28 @@ public class Main3 {
                 coodY = robo.getCoodY();
                 
                 try {
-                        matriz[robo.getCoodY()][robo.getCoodX()] = "-";
+                    matriz[robo.getCoodY()][robo.getCoodX()] = ".";
                         
-                        robo.mover(random.nextInt(4) + 1);
+                    robo.mover(random.nextInt(4) + 1);
                         
-                        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
+                    matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                         
-                        matriz[roboInteligente.getCoodY()][roboInteligente.getCoodX()] = roboInteligente.getCor();
-                        matriz[roboNormal.getCoodY()][roboNormal.getCoodX()] = roboNormal.getCor();
-                        
-                        teclado.nextLine();
+                    matriz[roboInteligente.getCoodY()][roboInteligente.getCoodX()] = roboInteligente.getCor();
+                    matriz[roboNormal.getCoodY()][roboNormal.getCoodX()] = roboNormal.getCor();                     
+                }
+                catch (MovimentoInvalidoException | NumeroSentidoInvalidoException e) {
+                    System.out.println(e.getMessage());
+                    matriz[coodY][coodX] = robo.getCor();
+                }
 
-                    } catch (MovimentoInvalidoException | NumeroSentidoInvalidoException e) {
-                        System.out.println(e.getMessage());
-                        matriz[coodY][coodX] = robo.getCor();
-                        teclado.nextLine();
-                    }
+                try {
+                    Thread.sleep(2000);
+                } 
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                    
+                System.out.println();
                 
                 for(i=0;i<4;i++){
                     for(j=0;j<4;j++){
@@ -135,8 +153,8 @@ public class Main3 {
                     }
                     System.out.println();
                 }
-                    
-                teclado.nextLine();
+             
+                System.out.println("------------------------------------");
                 
                 if(robo.alimentoEncontrado(posicaoYAli,posicaoXAli)){
                     roboVencedor = robo;
@@ -146,7 +164,8 @@ public class Main3 {
         
         }while (roboVencedor == null);
     
-        System.out.println("\nESTATISTICAS");
+        System.out.println("------------------------------------");
+        System.out.println("ESTATISTICAS");
         System.out.printf("Robô vencedor: %s",roboVencedor.retornarCor(roboVencedor.getCor()));
 
         System.out.printf("\nRobô normal (%s) - Movimentos totais: %d",roboNormal.retornarCor(roboNormal.getCor()),
@@ -156,9 +175,7 @@ public class Main3 {
         roboInteligente.getMovimentoValido());
     }
 
-
-
-    public static void limparTela(){
+    private static void limparTela(){
         try {   
             if (System.getProperty("os.name").contains("Windows")) {    
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();

@@ -1,3 +1,4 @@
+
 public class Robo{
     protected String cor;
     protected int coodX = 0;
@@ -5,10 +6,7 @@ public class Robo{
     protected int movimentoInvalido = 0;
     protected int movimentoValido = 0;
     
-    public Robo(String cor)throws CorInvalidaException{
-        if(!(cor.equals("azul") || cor.equals("vermelho") || cor.equals("preto") || cor.equals("branco")))
-            throw new CorInvalidaException("Cor inválida!");
-        
+    public Robo(String cor){
         this.coodX = 0;
         this.coodY = 0;
 
@@ -32,33 +30,46 @@ public class Robo{
             throw new NomeSentidoInvalidoException("Direção inválida! Use: up, down, right ou left");
         
         if(direcao.equals("up")){
-            if(coodY == 0)
+            if(coodY == 0){
+                movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
-            
+            }
+        
+            movimentoValido ++;
             coodY--;       
         }
 
         if(direcao.equals("down")){
-            if(coodY == 3)
+            if(coodY == 3){
+                movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
-            
+            }
+        
+            movimentoValido++;
             coodY++;
         }
         
         if(direcao.equals("right")){
-            if(coodX == 3)
+            if(coodX == 3){
+                movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite direito atingido!");
+            }
             
+            movimentoValido++;
             coodX++;          
         }
         
         if(direcao.equals("left")){
-            if(coodX == 0)
+            if(coodX == 0){
+                movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite esquerdo atingido!");
-            
+            }
+            movimentoValido++;
             coodX--;
         }
     }
+            
+            
     
     public void mover(int sentido) throws NumeroSentidoInvalidoException, MovimentoInvalidoException{
         if(!( (sentido == 1) || (sentido == 2) || (sentido == 3) || (sentido == 4) ) )
@@ -128,54 +139,24 @@ public class Robo{
 
         return null;
     }
-    
+
     public String getCor() {
         return cor;
     }
    
-    public void setCor(String cor) {
-        this.cor = cor;
-    }
-
-   
     public int getCoodX() {
         return coodX;
-    }
-
-    public void setCoodX(int coodX)throws CoordenadaInvalidaException {
-        if(coodX < 0 || coodX > 3)
-            throw new CoordenadaInvalidaException("Coordenada inválida!");
-    
-        this.coodX = coodX;
-    }
+    }   
 
     public int getCoodY(){
         return coodY;
-    }
-
-    public void setCoodY(int eixoY)throws CoordenadaInvalidaException{
-        if(coodY < 0 || coodY > 3)
-            throw new CoordenadaInvalidaException("Coordenada inválida!");
-        
-        this.coodY = eixoY;
     }
 
     public int getMovimentoInvalido() {
         return movimentoInvalido;
     }
 
-    public void setMovimentoInvalido(int movimentoInvalido) {
-        this.movimentoInvalido = movimentoInvalido;
-    }
-
     public int getMovimentoValido() {
         return movimentoValido;
     }
-
-    public void setMovimentoValido(int movimentoValido) {
-        this.movimentoValido = movimentoValido;
-    }
-
-   
-
 }

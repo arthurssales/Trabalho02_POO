@@ -5,23 +5,11 @@ import java.util.Scanner;
 
 
 public class Main2 { 
-    public static void limparTela(){
-        try {   
-            if (System.getProperty("os.name").contains("Windows")) {    
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } 
-                
-        }catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-
-    }
     public static void main(String[] args) {
         
-
+        
         /*Metodos para adicionar
-        imprimir tabuleiro
-        mostrar o passo a passo do metodo mover*/
+        imprimir tabuleiro*/
         
         Scanner teclado = new Scanner(System.in);
         String[][] matriz = new String[4][4];
@@ -47,13 +35,13 @@ public class Main2 {
         
         Robo robo1 = null;
         Robo robo2 = null;
-        
+    
         for(i=0;i<4;i++){
             for(j=0;j<4;j++){
-                matriz[i][j]= "-";
+                matriz[i][j]= ".";
             }
         }
-        
+              
         do{   
             if(robo1 == null){
                 System.out.println("Escolha uma cor pro robo 1"); 
@@ -62,13 +50,10 @@ public class Main2 {
                 }    
                 corRobo = teclado.nextLine();    
                 
-                try{     
+                if(coresDisponiveis.contains(corRobo)){
                     robo1 = new Robo(corRobo);
-                    coresDisponiveis.remove(corRobo);
-                    
-                }catch(CorInvalidaException e){ 
-                    System.out.println(e.getMessage());
-                }    
+                    coresDisponiveis.remove(corRobo);    
+                }
             }
                 
             if(robo2 == null){
@@ -77,22 +62,17 @@ public class Main2 {
                     System.out.printf("%s - ",cor);
                 }    
                 corRobo = teclado.nextLine();    
-                
-                try{     
+                if(coresDisponiveis.contains(corRobo)){    
                     robo2 = new Robo(corRobo);
-                    coresDisponiveis.remove(corRobo);
-                    
-                }catch(CorInvalidaException e){ 
-                    System.out.println(e.getMessage());
-                }    
+                    coresDisponiveis.remove(corRobo);        
+                }   
             }
         }while(robo1 == null || robo2 == null);
         
         robos.add(robo1);
         robos.add(robo2);
-
-        
-        while(!posicaoValida || (posicaoXAli == 0 && posicaoYAli == 0)){
+       
+        while(!posicaoValida){
             System.out.println("Indique a posição do alimento. A posição (0,0) é invalida");
             
             System.out.println("Coordenada no eixo y (de 0 a 3): "); 
@@ -103,25 +83,34 @@ public class Main2 {
             posicaoXAli = teclado.nextInt();
             teclado.nextLine();    
             
-            try{    
-                matriz[posicaoYAli][posicaoXAli] = "^";
-                posicaoValida = true;    
-            }
-            catch(IndexOutOfBoundsException e){
+            if(posicaoYAli == 0 && posicaoXAli == 0)
                 System.out.println("Coordenada inválida!");
-            }                   
-        }
-        
-        //quando dois robos ocupam a mesma posição e dps um dos dois sai, o robo que ficou desaparece da matriz(v)
-        //encontrar solução para casos mais gerais(firula)
+                
+            else{
+                try{    
+                    matriz[posicaoYAli][posicaoXAli] = "^";
+                    posicaoValida = true;    
+                }
+                catch(IndexOutOfBoundsException e){
+                    System.out.println("Coordenada inválida!");
+                }                   
+            }
+        }      
         limparTela();
         
         do{
             for(Robo robo : robos){
-                System.out.printf("robô %s\n",robo.retornarCor(robo.getCor()));
+                System.out.printf("Turno do robô %s\n",robo.retornarCor(robo.getCor()));
 
                 matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                 
+                try {
+                    Thread.sleep(1000); // pausa por 2 segundos
+                } 
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
                 for(i=0;i<4;i++){
                     for(j=0;j<4;j++){
                         System.out.print(matriz[i][j] + " ");       
@@ -133,10 +122,9 @@ public class Main2 {
                 coodY = robo.getCoodY();
 
                 try{
-                    matriz[robo.getCoodY()][robo.getCoodX()] = "-";
+                    matriz[robo.getCoodY()][robo.getCoodX()] = ".";
                     
                     robo.mover(random.nextInt(4) + 1);
-                    teclado.nextLine();
                     matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                     
                     matriz[robo1.getCoodY()][robo1.getCoodX()] = robo1.getCor();
@@ -144,9 +132,17 @@ public class Main2 {
                 }
                 catch(MovimentoInvalidoException | NumeroSentidoInvalidoException e){
                     System.out.println(e.getMessage());
-                    matriz[coodY][coodX] = robo.getCor();
-                    teclado.nextLine();
+                    matriz[coodY][coodX] = robo.getCor();   
                 }
+
+                try {
+                    Thread.sleep(1000); 
+                } 
+                catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                System.out.println();
                    
                 for(i=0;i<4;i++){
                     for(j=0;j<4;j++){
@@ -154,15 +150,16 @@ public class Main2 {
                     }
                     System.out.println();
                 } 
-                teclado.nextLine();
-                
+                  
+                System.out.println("------------------------------------------");
                 if(robo.alimentoEncontrado(posicaoYAli,posicaoXAli)){
                     roboVencedor = robo;
                     break;
                 }
             }
-
         }while(roboVencedor == null);
+
+        System.out.println("-----------------------------------------------------");
 
         System.out.println("ESTATÍSTICAS DA PARTIDA");
 
@@ -175,6 +172,16 @@ public class Main2 {
         System.out.println(" - Movimentos válidos: " + robo2.getMovimentoValido());
                
         System.out.println("Robô vencedor: " + roboVencedor.retornarCor(roboVencedor.getCor()));
+    }
 
-    }    
+    private static void limparTela(){
+        try {   
+            if (System.getProperty("os.name").contains("Windows")) {    
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            } 
+                
+        }catch (IOException | InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+    }
 }

@@ -1,0 +1,14 @@
+Trabalho02 o que falta? 
+
+1. Na classe robo 
+1.1. Ignorar case sensitive. 
+
+2. Na Main1
+2.1 Ignorar case sensitive.
+
+3. Na classe robô inteligente
+3.1. Selecionar para novo sentido apenas valores entre 1 e 4 com excessão do valor do sentido atual.
+
+4. Main4
+4.1. Adicionar sleep 
+4.2 Terminar metodo bater
