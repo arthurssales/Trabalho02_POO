@@ -1,47 +1,36 @@
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main1 {
      
     public static void main(String[] args) {
-        //1. adicionar sleeper
         Scanner teclado = new Scanner(System.in);
-        boolean posicaoValida = false;
+        
+        Matriz matriz1 = new Matriz();
+        Cor cor = new Cor();
         
         int posXAli = 0, posYAli = 0;
         String corRobo;        
-        int i,j;
-        
-        ArrayList<String> coresDisponiveis = new ArrayList<>();
-        coresDisponiveis.add("azul");
-        coresDisponiveis.add("vermelho");
-        coresDisponiveis.add("preto");
-        coresDisponiveis.add("branco");
-
-        String[][] matriz = new String[4][4];
+               
         Robo robo = null;
-        
-        for(i=0;i<4;i++){
-            for(j=0;j<4;j++){
-                matriz[i][j]= ".";
-            }
-        }
-        
+               
         //ignorar case sensitive
         while(robo == null){
             System.out.println("Escolha uma cor pro robo"); 
-            System.out.println("azul - vermelho - preto - branco");
+            cor.mostrarCores();
+            System.out.println();
             corRobo = teclado.nextLine();
             
-            if(coresDisponiveis.contains(corRobo))      
-                robo = new Robo(corRobo);   
+            if(cor.verificarCor(corRobo))
+                robo = new Robo(corRobo);
 
-            else
-                System.out.println("Cor inválida!");       
+            else 
+                System.out.println("\nCor indisponível!");
         }
+        
+        System.out.println();
 
-        while(!posicaoValida){
+        while(true){
             System.out.println("Indique a posição do alimento. A posição (0,0) é inválida");
             
             System.out.println("Coordenada do eixo y (de 0 a 3): "); 
@@ -52,31 +41,25 @@ public class Main1 {
             posXAli = teclado.nextInt();
             teclado.nextLine();    
             
-            if(posYAli == 0 && posXAli == 0)
-                System.out.println("Coordenada inválida!");
-            
-            else{
-                try{    
-                    matriz [posYAli][posXAli] = "^";
-                    posicaoValida = true;    
-                }
-                catch(Exception e){
-                    System.out.println("Coordenada inválida!");
-                }                   
+            if(matriz1.posicionarAlimento(posYAli,posXAli)){
+                System.out.println("Alimento posicionado com sucesso!");
+                break;   
             }
+
+            else
+                System.out.println("Coordenada inválida!");
         }
-         
-        matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-        limparTela();       
+    
+        matriz1.construirMatriz(posYAli, posXAli, robo.getCoodY(),robo.getCoodX(), robo.getCor());
+        
+        matriz1.imprimirMatriz();
+        teclado.nextLine(); 
+        limparTela(); 
+
             do{
                 System.out.println("------------------------------------");
                 
-                for(i=0;i<4;i++){
-                    for(j=0;j<4;j++){    
-                          System.out.print(matriz[i][j] + " ");
-                    }
-                    System.out.println();
-                }
+                matriz1.imprimirMatriz();
                                     
                 System.out.println("Indique o sentido do robô:");
                 System.out.println("1 - up\n2 - down\n3 - right\n4 - left");
@@ -86,8 +69,8 @@ public class Main1 {
                 int coodY = robo.getCoodY();
 
                 try {
-                    matriz[robo.getCoodY()][robo.getCoodX()] = ".";
-
+                    //matriz[robo.getCoodY()][robo.getCoodX()] = ".";
+                    matriz1.antigaPosicaoRobo(robo.getCoodY(), robo.getCoodX());
                     try {
                         int direcao = Integer.parseInt(entrada);
                         robo.mover(direcao); 
@@ -95,32 +78,27 @@ public class Main1 {
                         robo.mover(entrada);
                     } catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
-                    }
-
-                    matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-
+                    }                  
+                    //matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
+                    matriz1.novaPosicaoRobo(robo.getCoodY(), robo.getCoodX(), robo.getCor());
+                    
                 } catch (NomeSentidoInvalidoException | MovimentoInvalidoException e) {
                     System.out.println(e.getMessage());
-                    matriz[coodY][coodX] = robo.getCor();
+                    //matriz[coodY][coodX] = robo.getCor();
+                    matriz1.novaPosicaoRobo(coodY,coodX,robo.getCor());
                     teclado.nextLine();
                 }    
             }while(!robo.alimentoEncontrado(posYAli,posXAli)); 
                  
         System.out.println();
 
-        for(i=0;i<4;i++){
-            for(j=0;j<4;j++){
-                System.out.print(matriz[i][j] + " ");
-                
-            }
-            System.out.println();
-        }
+        matriz1.imprimirMatriz();
 
         System.out.println("\nAlimento encontrado!");
        
         System.out.println("------------------------------------");
-        System.out.println("ESTATISTICAS");
-        System.out.printf("Movimentos válidos: %d - Movimentos inválidos: %d",robo.getMovimentoValido(),robo.getMovimentoInvalido());
+        System.out.println("ESTATÍSTICAS");
+        robo.mostrarEstatisticas();
     }
     
     private static void limparTela(){

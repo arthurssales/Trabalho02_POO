@@ -1,4 +1,3 @@
-
 public class Robo{
     protected String cor;
     protected int coodX = 0;
@@ -30,23 +29,25 @@ public class Robo{
             throw new NomeSentidoInvalidoException("Direção inválida! Use: up, down, right ou left");
         
         if(direcao.equals("up")){
-            if(coodY == 0){
+            if(coodY == 3){
                 movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             }
         
             movimentoValido ++;
-            coodY--;       
+            //coodY--;
+            coodY++;       
         }
 
         if(direcao.equals("down")){
-            if(coodY == 3){
+            if(coodY == 0){
                 movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             }
         
             movimentoValido++;
-            coodY++;
+            //coodY++;
+            coodY--;
         }
         
         if(direcao.equals("right")){
@@ -77,24 +78,26 @@ public class Robo{
         
         if(sentido == 1){
             //up
-            if(coodY == 0){
+            if(coodY == 3){
                 movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite superior atingido!");
             }
             
             movimentoValido++;
-            coodY--;
+            //coodY--;
+            coodY++;
         }
 
         if(sentido == 2){
             //down
-            if(coodY == 3){
+            if(coodY == 0){
                 movimentoInvalido++;
                 throw new MovimentoInvalidoException("Erro! Limite inferior atingido!");    
             }
             
             movimentoValido++;
-            coodY++;
+            //coodY++;
+            coodY--;
         }
         
         if(sentido == 3){
@@ -124,6 +127,12 @@ public class Robo{
         return (eixoY == this.coodY && eixoX == this.coodX);
     }   
     
+    public void mostrarEstatisticas(){
+        System.out.printf("Robô %s",retornarCor(cor));
+        System.out.printf(": Movimentos válidos: %d - Movimentos inválidos: %d",movimentoValido,movimentoInvalido);
+        System.out.println();
+    }
+
     public String retornarCor(String cor){
         if(cor.equals("A"))
             return "azul"; 

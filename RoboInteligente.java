@@ -14,7 +14,7 @@ public class RoboInteligente extends Robo {
         
         if(sentido == 1){
             //up
-            if(coodY == 0){
+            if(coodY == 3){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (2,3,4) para escolher
                 System.out.println("Novo sentido:" + sentido);//apenas para debug
@@ -22,12 +22,12 @@ public class RoboInteligente extends Robo {
                 return;
             }
             movimentoValido++;
-            coodY--;
+            coodY++;
         }
         
         if(sentido == 2){
             //down
-            if(coodY == 3){
+            if(coodY == 0){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (1,3,4) para escolher
                 System.out.println("Novo sentido:" + sentido);
@@ -35,7 +35,7 @@ public class RoboInteligente extends Robo {
                 return;            
             } 
             movimentoValido++;
-            coodY++;
+            coodY--;
         }
         
         if(sentido == 3){

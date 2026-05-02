@@ -5,73 +5,57 @@ import java.util.Scanner;
 
 public class Main3 {    
     public static void main(String[] args) {
+        ArrayList<Robo> robos = new ArrayList<>();
         Scanner teclado = new Scanner(System.in);
         Random random = new Random();
           
-        String corRobo;
-        ArrayList<String> coresDisponiveis = new ArrayList<>();
-        coresDisponiveis.add("azul");
-        coresDisponiveis.add("vermelho");
-        coresDisponiveis.add("preto");
-        coresDisponiveis.add("branco");
-
-        String tipo = null;
-        int posicaoYAli = 0;
-        int posicaoXAli = 0;
-        int coodX, coodY;
-        
-        String[][] matriz = new String[4][4];
-        
-        boolean posicaoValida = false;
-        
+        Matriz matriz1 = new Matriz();
+        Cor cor = new Cor();
         Robo roboNormal = null;
         RoboInteligente roboInteligente = null;
         Robo roboVencedor = null;
-        ArrayList<Robo> robos = new ArrayList<>();
         
-        int i,j;
-
-        for(i=0;i<4;i++){
-            for(j=0;j<4;j++){
-                matriz[i][j] = ".";
-            }
-        }
-
+        int coodX, coodY;
+        int posicaoYAli = 0;
+        int posicaoXAli = 0;
+        String corRobo;
+        String tipo;
+        
         do{   
             if(roboNormal == null){
                 System.out.println("Escolha uma cor para o robô normal"); 
-                for(Object cor : coresDisponiveis){
-                    System.out.printf("%s - ",cor);
-                }    
+                cor.mostrarCores();
                 corRobo = teclado.nextLine();    
-                
-                if(coresDisponiveis.contains(corRobo)){
+                  
+                if(cor.verificarCor(corRobo)){
+                    System.out.println("Cor selecionada com sucesso!");
                     roboNormal = new Robo(corRobo);
-                    coresDisponiveis.remove(corRobo);
-                }    
+                }
+                else
+                    System.out.println("Cor indisponível!");                  
             }
                 
             if(roboInteligente == null){
                 System.out.println("Escolha uma cor para o robô inteligente"); 
-                for(Object cor : coresDisponiveis){
-                    System.out.printf("%s - ",cor);
-                }    
+                cor.mostrarCores();
                 corRobo = teclado.nextLine();    
-                
-                if(coresDisponiveis.contains(corRobo)){
-                    roboInteligente = new RoboInteligente(corRobo);
-                    coresDisponiveis.remove(corRobo);
-                }
+                if(cor.verificarCor(corRobo)){
+
+                    if(cor.selecionarCor(corRobo)){
+                        System.out.println("Cor selecionada com sucesso!");
+                        roboInteligente = new RoboInteligente(corRobo);
+                    }
+                }              
+                else
+                    System.out.println("Cor indisponível!");
             }
-            
         }while(roboNormal == null || roboInteligente == null);
         
         robos.add(roboNormal);
         robos.add(roboInteligente);
 
-
-        while(!posicaoValida || (posicaoYAli == 0 && posicaoXAli == 0)){
-            System.out.println("Indique a posição do alimento. A posição (0,0) é invalida");
+        while(true){
+            System.out.println("\n\nIndique a posição do alimento. A posição (0,0) é invalida");
             
             System.out.println("Coordenada no eixo y (de 0 a 3): "); 
             posicaoYAli = teclado.nextInt();
@@ -81,25 +65,26 @@ public class Main3 {
             posicaoXAli = teclado.nextInt();
             teclado.nextLine();    
             
-            try{    
-                matriz[posicaoYAli][posicaoXAli] = "^";
-                posicaoValida = true;    
+            if(matriz1.posicionarAlimento(posicaoYAli, posicaoXAli)){
+                System.out.println("\nAlimento posicionado com sucesso!");
+                break;
             }
-            catch(Exception e){
-                System.out.println("Coordenada inválida!");
-            }                   
+            else
+                System.out.println("\nCoordenda inválida!");   
         }
         
         limparTela();
+        matriz1.construirMatriz(posicaoYAli, posicaoXAli, roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
         System.out.println("COMEÇANDO ROBÔ NORMAL x ROBÔ INTELIGENTE");
     
         do{
             for(Robo robo : robos){
+                matriz1.novaPosicaoRobo(robo.getCoodY(),robo.getCoodX(),robo.getCor());
                 
                 if(robo instanceof RoboInteligente)
                     tipo = "inteligente";
                 else
-                    tipo = "inteligente";
+                    tipo = "normal";
 
                 try {
                     Thread.sleep(2000); 
@@ -111,31 +96,21 @@ public class Main3 {
 
                 System.out.printf("Turno do robô %s\n", tipo);
                 
-                matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-                
-                for(i=0;i<4;i++){
-                    for(j=0;j<4;j++){
-                        System.out.print(matriz[i][j] + " ");       
-                    }
-                    System.out.println();
-                } 
+                matriz1.imprimirMatriz();
 
                 coodX = robo.getCoodX();
                 coodY = robo.getCoodY();
                 
                 try {
-                    matriz[robo.getCoodY()][robo.getCoodX()] = ".";
-                        
+                    matriz1.antigaPosicaoRobo(robo.getCoodY(),robo.getCoodX());  
                     robo.mover(random.nextInt(4) + 1);
                         
-                    matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
-                        
-                    matriz[roboInteligente.getCoodY()][roboInteligente.getCoodX()] = roboInteligente.getCor();
-                    matriz[roboNormal.getCoodY()][roboNormal.getCoodX()] = roboNormal.getCor();                     
+                    matriz1.novaPosicaoRobo(roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
+                    matriz1.novaPosicaoRobo(roboInteligente.getCoodY(),roboInteligente.getCoodX(),roboInteligente.getCor());
                 }
                 catch (MovimentoInvalidoException | NumeroSentidoInvalidoException e) {
                     System.out.println(e.getMessage());
-                    matriz[coodY][coodX] = robo.getCor();
+                    matriz1.novaPosicaoRobo(coodY, coodX,robo.getCor());
                 }
 
                 try {
@@ -147,13 +122,8 @@ public class Main3 {
                     
                 System.out.println();
                 
-                for(i=0;i<4;i++){
-                    for(j=0;j<4;j++){
-                        System.out.print(matriz[i][j] + " ");
-                    }
-                    System.out.println();
-                }
-             
+                matriz1.imprimirMatriz();
+
                 System.out.println("------------------------------------");
                 
                 if(robo.alimentoEncontrado(posicaoYAli,posicaoXAli)){
@@ -165,6 +135,7 @@ public class Main3 {
         }while (roboVencedor == null);
     
         System.out.println("------------------------------------");
+        //fazer metodo para isso depois
         System.out.println("ESTATISTICAS");
         System.out.printf("Robô vencedor: %s",roboVencedor.retornarCor(roboVencedor.getCor()));
 

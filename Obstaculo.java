@@ -6,7 +6,7 @@ public abstract class Obstaculo {
 
     public abstract boolean bater(int coodY,int coodX);
 
-    //pode criar getters e setters em uma classe abstrata?
+    public abstract boolean qntdObstaculo(int qntd);
 
     public void setCobX(int cobX){
         this.cobX = cobX;
