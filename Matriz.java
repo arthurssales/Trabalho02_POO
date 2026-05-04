@@ -45,20 +45,6 @@ public class Matriz {
         }
     }
     
-    //desnecessaria
-    public void construirMatriz(int posYAli,int posXAli,int coodYR1,int coodXR1,String corRobo1,int coodYR2,int coodXR2, String corRobo2){
-        for(i=0;i<4;i++){
-            for(j=0;j<4;j++){
-                matriz[i][j] = ".";
-            }
-        }
-        //talvez sejam desnecessários, ja que ja existem metodos que posicionam esses caracteres
-            matriz[posYAli][posXAli] = "^";
-            
-            matriz[coodYR1][coodXR1] = corRobo1;
-            matriz[coodYR2][coodXR2] = corRobo2;
-    }
-    
     public void imprimirMatriz(){
         for(i=3;i>=0;i--){
             for(j=0;j<4;j++){
@@ -71,6 +57,10 @@ public class Matriz {
 
     public void antigaPosicaoRobo(int posYRobo,int posXRobo){
         matriz[posYRobo][posXRobo] = ".";
+    }
+
+    public void antigaPosicaoRocha(int posYRobo,int posXRobo){
+        matriz[posYRobo][posXRobo] = "O";
     }
 
     public void novaPosicaoRobo(int posYRobo,int posXRobo,String corRobo){

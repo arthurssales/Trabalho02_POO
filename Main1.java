@@ -1,11 +1,10 @@
-import java.io.IOException;
 import java.util.Scanner;
 
-public class Main1 {
-     
+public class Main1 {  
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
         
+        MetodosImplement metodo = new MetodosImplement();
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
         
@@ -21,7 +20,7 @@ public class Main1 {
             System.out.println();
             corRobo = teclado.nextLine();
             
-            if(cor.verificarCor(corRobo))
+            if(cor.selecionarCor(corRobo))
                 robo = new Robo(corRobo);
 
             else 
@@ -45,17 +44,17 @@ public class Main1 {
                 System.out.println("Alimento posicionado com sucesso!");
                 break;   
             }
-
             else
                 System.out.println("Coordenada inválida!");
         }
+        
     
         matriz1.construirMatriz(posYAli, posXAli, robo.getCoodY(),robo.getCoodX(), robo.getCor());
-        
+    
         matriz1.imprimirMatriz();
         teclado.nextLine(); 
-        limparTela(); 
-
+        
+        metodo.limparTela(); 
             do{
                 System.out.println("------------------------------------");
                 
@@ -69,7 +68,6 @@ public class Main1 {
                 int coodY = robo.getCoodY();
 
                 try {
-                    //matriz[robo.getCoodY()][robo.getCoodX()] = ".";
                     matriz1.antigaPosicaoRobo(robo.getCoodY(), robo.getCoodX());
                     try {
                         int direcao = Integer.parseInt(entrada);
@@ -79,12 +77,10 @@ public class Main1 {
                     } catch (NumeroSentidoInvalidoException e) {
                         System.out.println(e.getMessage());
                     }                  
-                    //matriz[robo.getCoodY()][robo.getCoodX()] = robo.getCor();
                     matriz1.novaPosicaoRobo(robo.getCoodY(), robo.getCoodX(), robo.getCor());
                     
                 } catch (NomeSentidoInvalidoException | MovimentoInvalidoException e) {
                     System.out.println(e.getMessage());
-                    //matriz[coodY][coodX] = robo.getCor();
                     matriz1.novaPosicaoRobo(coodY,coodX,robo.getCor());
                     teclado.nextLine();
                 }    
@@ -99,18 +95,5 @@ public class Main1 {
         System.out.println("------------------------------------");
         System.out.println("ESTATÍSTICAS");
         robo.mostrarEstatisticas();
-    }
-    
-    private static void limparTela(){
-        try {
-            if (System.getProperty("os.name").contains("Windows")) {    
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } else {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-            }
-        } catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

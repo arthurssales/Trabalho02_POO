@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,7 +7,8 @@ public class Main3 {
         ArrayList<Robo> robos = new ArrayList<>();
         Scanner teclado = new Scanner(System.in);
         Random random = new Random();
-          
+        MetodosImplement metodo = new MetodosImplement();  
+
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
         Robo roboNormal = null;
@@ -27,7 +27,7 @@ public class Main3 {
                 cor.mostrarCores();
                 corRobo = teclado.nextLine();    
                   
-                if(cor.verificarCor(corRobo)){
+                if(cor.selecionarCor(corRobo)){
                     System.out.println("Cor selecionada com sucesso!");
                     roboNormal = new Robo(corRobo);
                 }
@@ -39,12 +39,9 @@ public class Main3 {
                 System.out.println("Escolha uma cor para o robô inteligente"); 
                 cor.mostrarCores();
                 corRobo = teclado.nextLine();    
-                if(cor.verificarCor(corRobo)){
-
-                    if(cor.selecionarCor(corRobo)){
+                if(cor.selecionarCor(corRobo)){
                         System.out.println("Cor selecionada com sucesso!");
                         roboInteligente = new RoboInteligente(corRobo);
-                    }
                 }              
                 else
                     System.out.println("Cor indisponível!");
@@ -73,7 +70,7 @@ public class Main3 {
                 System.out.println("\nCoordenda inválida!");   
         }
         
-        limparTela();
+        metodo.limparTela();
         matriz1.construirMatriz(posicaoYAli, posicaoXAli, roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
         System.out.println("COMEÇANDO ROBÔ NORMAL x ROBÔ INTELIGENTE");
     
@@ -86,13 +83,7 @@ public class Main3 {
                 else
                     tipo = "normal";
 
-                try {
-                    Thread.sleep(2000); 
-                } 
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
+                metodo.delay();
 
                 System.out.printf("Turno do robô %s\n", tipo);
                 
@@ -113,15 +104,8 @@ public class Main3 {
                     matriz1.novaPosicaoRobo(coodY, coodX,robo.getCor());
                 }
 
-                try {
-                    Thread.sleep(2000);
-                } 
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                    
+                metodo.delay();
                 System.out.println();
-                
                 matriz1.imprimirMatriz();
 
                 System.out.println("------------------------------------");
@@ -144,15 +128,5 @@ public class Main3 {
 
         System.out.printf("\nRobô inteligente (%s) - Movimentos totais: %d",roboInteligente.retornarCor(roboInteligente.getCor()),
         roboInteligente.getMovimentoValido());
-    }
-
-    private static void limparTela(){
-        try {   
-            if (System.getProperty("os.name").contains("Windows")) {    
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            }        
-        }catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

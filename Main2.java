@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -8,6 +7,7 @@ public class Main2 {
         ArrayList<Robo> robos = new ArrayList<>();
         Scanner teclado = new Scanner(System.in);
         Random random = new Random();
+        MetodosImplement metodo = new MetodosImplement();
         
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
@@ -24,14 +24,11 @@ public class Main2 {
                 System.out.println("\nEscolha uma cor pro robo 1"); 
                 cor.mostrarCores();
                 corRobo = teclado.nextLine();    
-                if(cor.verificarCor(corRobo)){
-                    
+          
                     if(cor.selecionarCor(corRobo)){
                         System.out.println("Cor selecionada com sucesso!");
                         robo1 = new Robo(corRobo);    
-                    } 
-                   
-                }
+                    }                
                 else
                     System.out.println("Cor indisponível!");
             }
@@ -40,15 +37,11 @@ public class Main2 {
                 System.out.println("\nEscolha uma cor pro robo 2"); 
                 cor.mostrarCores();
                 corRobo = teclado.nextLine();    
-                
-                if(cor.verificarCor(corRobo)){
-                    
-                    if(cor.selecionarCor(corRobo)){
-                        System.out.println("Cor selecionada com sucesso!");
-                        robo2 = new Robo(corRobo);
-                    }
-                  
-                }
+                     
+                if(cor.selecionarCor(corRobo)){
+                    System.out.println("Cor selecionada com sucesso!");
+                    robo2 = new Robo(corRobo);
+                }  
                 else
                     System.out.println("Cor indisponível!");
             }
@@ -76,7 +69,7 @@ public class Main2 {
                 System.out.println("\nCoordenada inválida!");
         }
         
-        limparTela();
+        metodo.limparTela();
         matriz1.construirMatriz(posicaoYAli, posicaoXAli,robo1.getCoodY(),robo1.getCoodX(),robo1.getCor());
         System.out.println("COMEÇANDO RANDOM1 x RANDOM2");
 
@@ -86,13 +79,8 @@ public class Main2 {
             
                 matriz1.novaPosicaoRobo(robo.getCoodY(),robo.getCoodX(),robo.getCor());
                 
-                try {
-                    Thread.sleep(1000); 
-                } 
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+                metodo.delay();
+                //teclado.nextLine();
                 matriz1.imprimirMatriz();
                      
                 coodX = robo.getCoodX();
@@ -111,13 +99,8 @@ public class Main2 {
                     matriz1.novaPosicaoRobo(coodY, coodX, robo.getCor());
                 }
 
-                try {
-                    Thread.sleep(1000); 
-                } 
-                catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
+                metodo.delay();
+                //teclado.nextLine();
                 System.out.println();
                 
                 matriz1.imprimirMatriz();
@@ -137,16 +120,5 @@ public class Main2 {
         }
         
         System.out.println("\nRobô vencedor: " + roboVencedor.retornarCor(roboVencedor.getCor()));
-    }
-
-    private static void limparTela(){
-        try {   
-            if (System.getProperty("os.name").contains("Windows")) {    
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            } 
-                
-        }catch (IOException | InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

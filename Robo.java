@@ -161,6 +161,14 @@ public class Robo{
         return coodY;
     }
 
+    public void setCoodY(int coodY){
+        this.coodY = coodY;
+    }
+
+    public void setCoodX(int coodX){
+        this.coodX = coodX;
+    }
+
     public int getMovimentoInvalido() {
         return movimentoInvalido;
     }

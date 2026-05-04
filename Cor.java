@@ -15,12 +15,12 @@ public class Cor {
         }
     }
 
-    public boolean verificarCor(String corRobo){
+    /*public boolean verificarCor(String corRobo){
         if(coresDisponiveis.contains(corRobo))
             return true;
 
         return false;
-    }
+    }*/
 
     public boolean selecionarCor(String corRobo){
         if(coresDisponiveis.contains(corRobo)){
