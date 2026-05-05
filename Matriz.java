@@ -2,15 +2,12 @@ public class Matriz {
     private final String[][] matriz = new String[4][4];
     private int i,j;
 
-    //retirar o posicionamento do alimento
-    public void construirMatriz(int posYAli,int posXAli,int coodY,int coodX,String corRobo){
+    public void construirMatriz(){
         for(i=0;i<4;i++){
             for(j=0;j<4;j++){
                 matriz[i][j] = ".";
             }
         }
-            matriz[posYAli][posXAli] = "^";
-            matriz[coodY][coodX] = corRobo;
     }
       
     public boolean posicionarAlimento(int posYAli,int posXAli){

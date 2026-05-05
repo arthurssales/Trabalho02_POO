@@ -1,10 +1,10 @@
 import java.util.Random;
-
 /*
 1. O novo valor do sentido deve receber um valor entre 1 a 4 exceto o valor atual do sentido
  */
 public class RoboInteligente extends Robo {
     Random random = new Random();
+    
     public RoboInteligente(String cor){
         super(cor);
     }
@@ -12,12 +12,12 @@ public class RoboInteligente extends Robo {
     @Override
     public void mover(int sentido)throws MovimentoInvalidoException{
         
+        //up
         if(sentido == 1){
-            //up
             if(coodY == 3){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (2,3,4) para escolher
-                System.out.println("Novo sentido:" + sentido);//apenas para debug
+                System.out.println("Novo sentido:" + sentido);//apenas para mostrar
                 this.mover(sentido);
                 return;
             }
@@ -25,8 +25,8 @@ public class RoboInteligente extends Robo {
             coodY++;
         }
         
+        //down
         if(sentido == 2){
-            //down
             if(coodY == 0){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (1,3,4) para escolher
@@ -38,8 +38,8 @@ public class RoboInteligente extends Robo {
             coodY--;
         }
         
+        //rigth
         if(sentido == 3){
-            //rigth
             if(coodX == 3){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (1,2,4) para escolher
@@ -51,8 +51,8 @@ public class RoboInteligente extends Robo {
             coodX++;
         }
         
+        //left
         if(sentido == 4){
-            //left
             if(coodX == 0){
                 System.out.println("Sentido invalido: " + sentido);
                 sentido = random.nextInt(4) + 1; //selecionar numeros (1,2,3) para escolher
@@ -64,11 +64,4 @@ public class RoboInteligente extends Robo {
             coodX--;   
         }
     }
-    
-    
 }
-
-
-
-
-

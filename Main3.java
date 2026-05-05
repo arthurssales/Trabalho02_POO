@@ -11,6 +11,8 @@ public class Main3 {
 
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
+        matriz1.construirMatriz();
+
         Robo roboNormal = null;
         RoboInteligente roboInteligente = null;
         Robo roboVencedor = null;
@@ -48,6 +50,7 @@ public class Main3 {
             }
         }while(roboNormal == null || roboInteligente == null);
         
+        matriz1.novaPosicaoRobo(roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
         robos.add(roboNormal);
         robos.add(roboInteligente);
 
@@ -71,7 +74,7 @@ public class Main3 {
         }
         
         metodo.limparTela();
-        matriz1.construirMatriz(posicaoYAli, posicaoXAli, roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
+        //matriz1.construirMatriz(posicaoYAli, posicaoXAli, roboNormal.getCoodY(),roboNormal.getCoodX(),roboNormal.getCor());
         System.out.println("COMEÇANDO ROBÔ NORMAL x ROBÔ INTELIGENTE");
     
         do{

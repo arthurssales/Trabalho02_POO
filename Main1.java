@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Main1 {  
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
@@ -7,10 +6,10 @@ public class Main1 {
         MetodosImplement metodo = new MetodosImplement();
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
+        matriz1.construirMatriz();
         
         int posXAli = 0, posYAli = 0;
-        String corRobo;        
-               
+        String corRobo;                    
         Robo robo = null;
                
         //ignorar case sensitive
@@ -26,6 +25,8 @@ public class Main1 {
             else 
                 System.out.println("\nCor indisponível!");
         }
+
+        matriz1.novaPosicaoRobo(robo.getCoodY(),robo.getCoodX(),robo.getCor());
         
         System.out.println();
 
@@ -48,8 +49,7 @@ public class Main1 {
                 System.out.println("Coordenada inválida!");
         }
         
-    
-        matriz1.construirMatriz(posYAli, posXAli, robo.getCoodY(),robo.getCoodX(), robo.getCor());
+        //matriz1.construirMatriz(posYAli, posXAli, robo.getCoodY(),robo.getCoodX(), robo.getCor());
     
         matriz1.imprimirMatriz();
         teclado.nextLine(); 

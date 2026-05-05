@@ -4,6 +4,7 @@ public class Robo{
     protected int coodY = 0;
     protected int movimentoInvalido = 0;
     protected int movimentoValido = 0;
+    protected boolean explodiu = false;
     
     public Robo(String cor){
         this.coodX = 0;
@@ -147,6 +148,14 @@ public class Robo{
             return "branco";
 
         return null;
+    }
+
+    public boolean getExplodiu(){
+        return explodiu;
+    }
+
+    public void setExplodiu(boolean explodiu){
+        this.explodiu = explodiu;
     }
 
     public String getCor() {

@@ -1,5 +1,4 @@
 import java.io.IOException;
-
 public class MetodosImplement {
     
     public void limparTela(){
@@ -23,6 +22,4 @@ public class MetodosImplement {
             e.printStackTrace();
         }
     }
-
-
 }

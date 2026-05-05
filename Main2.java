@@ -11,6 +11,8 @@ public class Main2 {
         
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
+        matriz1.construirMatriz();
+
         Robo roboVencedor = null;
         Robo robo1 = null;
         Robo robo2 = null;
@@ -47,6 +49,8 @@ public class Main2 {
             }
         }while(robo1 == null || robo2 == null);
         
+        matriz1.novaPosicaoRobo(robo1.getCoodY(),robo1.getCoodX(),robo1.getCor());
+
         robos.add(robo1);
         robos.add(robo2);
        
@@ -70,7 +74,7 @@ public class Main2 {
         }
         
         metodo.limparTela();
-        matriz1.construirMatriz(posicaoYAli, posicaoXAli,robo1.getCoodY(),robo1.getCoodX(),robo1.getCor());
+        //matriz1.construirMatriz(posicaoYAli, posicaoXAli,robo1.getCoodY(),robo1.getCoodX(),robo1.getCor());
         System.out.println("COMEÇANDO RANDOM1 x RANDOM2");
 
         do{

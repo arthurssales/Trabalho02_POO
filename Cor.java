@@ -11,16 +11,9 @@ public class Cor {
     
     public void mostrarCores(){
         for(String cor : coresDisponiveis){
-            System.out.print(" | " + cor + " | ");
+            System.out.printf(" [ %s ] ",cor);
         }
     }
-
-    /*public boolean verificarCor(String corRobo){
-        if(coresDisponiveis.contains(corRobo))
-            return true;
-
-        return false;
-    }*/
 
     public boolean selecionarCor(String corRobo){
         if(coresDisponiveis.contains(corRobo)){
