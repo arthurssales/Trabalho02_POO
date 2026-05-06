@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-
 public class Main2 { 
     public static void main(String[] args) {
         ArrayList<Robo> robos = new ArrayList<>();
@@ -20,7 +19,26 @@ public class Main2 {
         int coodX, coodY;
         int posicaoXAli = 0, posicaoYAli = 0;
         String corRobo;        
+        
+        while(true){
+            System.out.println("\n\nIndique a posição do alimento. A posição (0,0) é invalida");
             
+            System.out.println("Coordenada no eixo y (de 0 a 3): "); 
+            posicaoYAli = teclado.nextInt();
+            teclado.nextLine();        
+            
+            System.out.println("Coordenada no eixo x (de 0 a 3): ");
+            posicaoXAli = teclado.nextInt();
+            teclado.nextLine();    
+                     
+            if(matriz1.posicionarAlimento(posicaoYAli, posicaoXAli)){
+                System.out.println("\nAlimento posicionado com sucesso!");
+                break;
+            }
+            else 
+                System.out.println("\nCoordenada inválida!");
+        }
+
         do{   
             if(robo1 == null){
                 System.out.println("\nEscolha uma cor pro robo 1"); 
@@ -53,28 +71,8 @@ public class Main2 {
 
         robos.add(robo1);
         robos.add(robo2);
-       
-        while(true){
-            System.out.println("\n\nIndique a posição do alimento. A posição (0,0) é invalida");
-            
-            System.out.println("Coordenada no eixo y (de 0 a 3): "); 
-            posicaoYAli = teclado.nextInt();
-            teclado.nextLine();        
-            
-            System.out.println("Coordenada no eixo x (de 0 a 3): ");
-            posicaoXAli = teclado.nextInt();
-            teclado.nextLine();    
-                     
-            if(matriz1.posicionarAlimento(posicaoYAli, posicaoXAli)){
-                System.out.println("\nAlimento posicionado com sucesso!");
-                break;
-            }
-            else 
-                System.out.println("\nCoordenada inválida!");
-        }
-        
+             
         metodo.limparTela();
-        //matriz1.construirMatriz(posicaoYAli, posicaoXAli,robo1.getCoodY(),robo1.getCoodX(),robo1.getCor());
         System.out.println("COMEÇANDO RANDOM1 x RANDOM2");
 
         do{

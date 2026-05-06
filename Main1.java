@@ -2,7 +2,6 @@ import java.util.Scanner;
 public class Main1 {  
     public static void main(String[] args) {
         Scanner teclado = new Scanner(System.in);
-        
         MetodosImplement metodo = new MetodosImplement();
         Matriz matriz1 = new Matriz();
         Cor cor = new Cor();
@@ -11,25 +10,7 @@ public class Main1 {
         int posXAli = 0, posYAli = 0;
         String corRobo;                    
         Robo robo = null;
-               
-        //ignorar case sensitive
-        while(robo == null){
-            System.out.println("Escolha uma cor pro robo"); 
-            cor.mostrarCores();
-            System.out.println();
-            corRobo = teclado.nextLine();
-            
-            if(cor.selecionarCor(corRobo))
-                robo = new Robo(corRobo);
-
-            else 
-                System.out.println("\nCor indisponível!");
-        }
-
-        matriz1.novaPosicaoRobo(robo.getCoodY(),robo.getCoodX(),robo.getCor());
         
-        System.out.println();
-
         while(true){
             System.out.println("Indique a posição do alimento. A posição (0,0) é inválida");
             
@@ -48,13 +29,29 @@ public class Main1 {
             else
                 System.out.println("Coordenada inválida!");
         }
-        
-        //matriz1.construirMatriz(posYAli, posXAli, robo.getCoodY(),robo.getCoodX(), robo.getCor());
-    
+
+        while(robo == null){
+            System.out.println("Escolha uma cor pro robo"); 
+            cor.mostrarCores();
+            System.out.println();
+            corRobo = teclado.nextLine();
+            
+            if(cor.selecionarCor(corRobo))
+                robo = new Robo(corRobo);
+
+            else 
+                System.out.println("\nCor indisponível!");
+        }
+
+        matriz1.novaPosicaoRobo(robo.getCoodY(),robo.getCoodX(),robo.getCor());       
+        System.out.println();
+       
+        metodo.limparTela(); 
         matriz1.imprimirMatriz();
+        System.out.println("\nINCIANDO MAIN1");
+        System.out.println("DIRECIONE O ROBÔ ATÉ O ALIMENTO PARA VENCER A PARTIDA");
         teclado.nextLine(); 
         
-        metodo.limparTela(); 
             do{
                 System.out.println("------------------------------------");
                 

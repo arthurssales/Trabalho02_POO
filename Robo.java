@@ -4,6 +4,7 @@ public class Robo{
     protected int coodY = 0;
     protected int movimentoInvalido = 0;
     protected int movimentoValido = 0;
+    protected boolean alimentoEncontrado = false;
     protected boolean explodiu = false;
     
     public Robo(String cor){
@@ -125,7 +126,10 @@ public class Robo{
     }
 
     public boolean alimentoEncontrado(int eixoY,int eixoX){
-        return (eixoY == this.coodY && eixoX == this.coodX);
+       if (eixoY == this.coodY && eixoX == this.coodX)
+           alimentoEncontrado = true;
+
+        return alimentoEncontrado;
     }   
     
     public void mostrarEstatisticas(){
@@ -150,7 +154,7 @@ public class Robo{
         return null;
     }
 
-    public boolean getExplodiu(){
+    public boolean isExplodiu(){
         return explodiu;
     }
 
@@ -184,5 +188,13 @@ public class Robo{
 
     public int getMovimentoValido() {
         return movimentoValido;
+    }
+
+    public boolean isAlimentoEncontrado() {
+        return alimentoEncontrado;
+    }
+
+    public void setAlimentoEncontrado(boolean alimentoEncontrado) {
+        this.alimentoEncontrado = alimentoEncontrado;
     }
 }
